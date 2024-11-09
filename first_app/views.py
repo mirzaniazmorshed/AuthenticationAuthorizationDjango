@@ -50,12 +50,32 @@ def user_logout(request):
     return redirect('login')
 
 def pass_change(request):
-    if request.method == 'POST':
-        form = PasswordChangeForm(user = request.user, data = request.POST)
-        if form.is_valid():
-            form.save()
-            update_session_auth_hash(request, form.cleaned_data['user']) #pass update korbe
-            return redirect('profile')
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            form = PasswordChangeForm(user = request.user, data = request.POST)
+            if form.is_valid():
+                form.save()
+                update_session_auth_hash(request, form.user) #pass update korbe
+                return redirect('profile')
+        else:
+            form = PasswordChangeForm(user=request.user)
+        return render(request, './passchange.html', {'form': form})  
     else:
-        form = PasswordChangeForm(user=request.user)
-    return render(request, './passchange.html', {'form': form})        
+        return redirect('login')      
+
+#prettysujana - pass: samihex1
+
+def pass_change2(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            form = SetPasswordForm(user = request.user, data = request.POST)
+            if form.is_valid():
+                form.save()
+                update_session_auth_hash(request, form.user) #pass update korbe
+                return redirect('profile')
+        else:
+            form = SetPasswordForm(user=request.user)
+        return render(request, './passchange.html', {'form': form})  
+    else:
+        return redirect('login') 
+

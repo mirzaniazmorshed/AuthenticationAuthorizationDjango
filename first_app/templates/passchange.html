@@ -18,10 +18,10 @@
  {% for fm in form %}
  {{ fm.label_tag }}
  {{ fm }}
- {{ fm.errors | striptags }}
+ <p class='text-danger'> {{ fm.errors | striptags }}</p>
  {% endfor %} 
 <br>
-<button class="btn btn-warning" type="submit"> Login </button>
+<button class="btn btn-warning" type="submit"> Password Change </button>
 </form>
 
 {% endblock %}
