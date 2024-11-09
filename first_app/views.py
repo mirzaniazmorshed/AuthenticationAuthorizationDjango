@@ -57,5 +57,5 @@ def pass_change(request):
             update_session_auth_hash(request, form.cleaned_data['user']) #pass update korbe
             return redirect('profile')
     else:
-        form = PasswordChangeForm(user = request.user)
-    return redirect(request, './passchange.html', {'form': form})        
+        form = PasswordChangeForm(user=request.user)
+    return render(request, './passchange.html', {'form': form})        
